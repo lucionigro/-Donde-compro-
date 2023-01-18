@@ -10,21 +10,6 @@ namespace Donde_Compro.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Orden",
-                columns: table => new
-                {
-                    OrdenId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Cantidad = table.Column<int>(type: "int", nullable: false),
-                    DiaDeCompra = table.Column<DateTime>(type: "date", nullable: false),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Orden", x => x.OrdenId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProductoCategoria",
                 columns: table => new
                 {
@@ -73,18 +58,11 @@ namespace Donde_Compro.Migrations
                     Descripcion = table.Column<string>(type: "nvarchar(350)", maxLength: 350, nullable: false),
                     Precio = table.Column<float>(type: "real", nullable: false),
                     Publicado = table.Column<DateTime>(type: "date", nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: false),
-                    OrdenId = table.Column<int>(type: "int", nullable: false)
+                    CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Producto", x => x.ProductoId);
-                    table.ForeignKey(
-                        name: "FK_Producto_Orden_OrdenId",
-                        column: x => x.OrdenId,
-                        principalTable: "Orden",
-                        principalColumn: "OrdenId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Producto_ProductoCategoria_CategoriaId",
                         column: x => x.CategoriaId,
@@ -97,7 +75,8 @@ namespace Donde_Compro.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Correo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Clave = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
@@ -109,12 +88,6 @@ namespace Donde_Compro.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Usuario", x => x.UsuarioId);
-                    table.ForeignKey(
-                        name: "FK_Usuario_Orden_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Orden",
-                        principalColumn: "OrdenId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Usuario_Rol_Roltype",
                         column: x => x.Roltype,
@@ -129,15 +102,49 @@ namespace Donde_Compro.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Orden",
+                columns: table => new
+                {
+                    OrdenId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Cantidad = table.Column<int>(type: "int", nullable: false),
+                    DiaDeCompra = table.Column<DateTime>(type: "date", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    ProductoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orden", x => x.OrdenId);
+                    table.ForeignKey(
+                        name: "FK_Orden_Producto_ProductoId",
+                        column: x => x.ProductoId,
+                        principalTable: "Producto",
+                        principalColumn: "ProductoId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orden_Usuario_UsuarioId",
+                        column: x => x.UsuarioId,
+                        principalTable: "Usuario",
+                        principalColumn: "UsuarioId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orden_ProductoId",
+                table: "Orden",
+                column: "ProductoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orden_UsuarioId",
+                table: "Orden",
+                column: "UsuarioId",
+                unique: true);
+
             migrationBuilder.CreateIndex(
                 name: "IX_Producto_CategoriaId",
                 table: "Producto",
                 column: "CategoriaId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Producto_OrdenId",
-                table: "Producto",
-                column: "OrdenId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuario_Roltype",
@@ -154,6 +161,9 @@ namespace Donde_Compro.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Orden");
+
+            migrationBuilder.DropTable(
                 name: "Producto");
 
             migrationBuilder.DropTable(
@@ -161,9 +171,6 @@ namespace Donde_Compro.Migrations
 
             migrationBuilder.DropTable(
                 name: "ProductoCategoria");
-
-            migrationBuilder.DropTable(
-                name: "Orden");
 
             migrationBuilder.DropTable(
                 name: "Rol");
