@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Donde_Compro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230118191421_MigracionInicial")]
+    [Migration("20230118225527_MigracionInicial")]
     partial class MigracionInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,10 +38,20 @@ namespace Donde_Compro.Migrations
                     b.Property<DateTime>("DiaDeCompra")
                         .HasColumnType("date");
 
+                    b.Property<int?>("ProductoId")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<int?>("UsuarioId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("OrdenId");
+
+                    b.HasIndex("ProductoId");
+
+                    b.HasIndex("UsuarioId")
+                        .IsUnique();
 
                     b.ToTable("Orden");
                 });
@@ -67,9 +77,6 @@ namespace Donde_Compro.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("OrdenId")
-                        .HasColumnType("int");
-
                     b.Property<float>("Precio")
                         .HasColumnType("real");
 
@@ -79,8 +86,6 @@ namespace Donde_Compro.Migrations
                     b.HasKey("ProductoId");
 
                     b.HasIndex("CategoriaId");
-
-                    b.HasIndex("OrdenId");
 
                     b.ToTable("Producto");
                 });
@@ -122,7 +127,10 @@ namespace Donde_Compro.Migrations
             modelBuilder.Entity("Donde_Compro.Models.Usuario", b =>
                 {
                     b.Property<int>("UsuarioId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioId"), 1L, 1);
 
                     b.Property<string>("Clave")
                         .IsRequired()
@@ -150,7 +158,8 @@ namespace Donde_Compro.Migrations
                     b.Property<int>("Roltype")
                         .HasColumnType("int");
 
-                    b.Property<int>("UsuarioPagoId")
+                    b.Property<int?>("UsuarioPagoId")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.HasKey("UsuarioId");
@@ -180,6 +189,25 @@ namespace Donde_Compro.Migrations
                     b.ToTable("UsuarioPago");
                 });
 
+            modelBuilder.Entity("Donde_Compro.Models.Orden", b =>
+                {
+                    b.HasOne("Donde_Compro.Models.Producto", "Producto")
+                        .WithMany("Orden")
+                        .HasForeignKey("ProductoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Donde_Compro.Models.Usuario", "Usuario")
+                        .WithOne("Orden")
+                        .HasForeignKey("Donde_Compro.Models.Orden", "UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Producto");
+
+                    b.Navigation("Usuario");
+                });
+
             modelBuilder.Entity("Donde_Compro.Models.Producto", b =>
                 {
                     b.HasOne("Donde_Compro.Models.ProductoCategoria", "ProductoCategoria")
@@ -187,14 +215,6 @@ namespace Donde_Compro.Migrations
                         .HasForeignKey("CategoriaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Donde_Compro.Models.Orden", "Orden")
-                        .WithMany("Producto")
-                        .HasForeignKey("OrdenId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Orden");
 
                     b.Navigation("ProductoCategoria");
                 });
@@ -207,31 +227,20 @@ namespace Donde_Compro.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Donde_Compro.Models.Orden", "Orden")
-                        .WithOne("Usuario")
-                        .HasForeignKey("Donde_Compro.Models.Usuario", "UsuarioId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Donde_Compro.Models.UsuarioPago", "UsuarioPago")
                         .WithOne("Usuario")
                         .HasForeignKey("Donde_Compro.Models.Usuario", "UsuarioPagoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Orden");
-
                     b.Navigation("Rol");
 
                     b.Navigation("UsuarioPago");
                 });
 
-            modelBuilder.Entity("Donde_Compro.Models.Orden", b =>
+            modelBuilder.Entity("Donde_Compro.Models.Producto", b =>
                 {
-                    b.Navigation("Producto");
-
-                    b.Navigation("Usuario")
-                        .IsRequired();
+                    b.Navigation("Orden");
                 });
 
             modelBuilder.Entity("Donde_Compro.Models.ProductoCategoria", b =>
@@ -242,6 +251,12 @@ namespace Donde_Compro.Migrations
             modelBuilder.Entity("Donde_Compro.Models.Rol", b =>
                 {
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Donde_Compro.Models.Usuario", b =>
+                {
+                    b.Navigation("Orden")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Donde_Compro.Models.UsuarioPago", b =>

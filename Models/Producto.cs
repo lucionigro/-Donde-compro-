@@ -15,7 +15,6 @@ namespace Donde_Compro.Models
         public ProductoCategoria ProductoCategoria { get; set; }
         public int CategoriaId { get; set; }
 
-        public int OrdenId { get; set; }
-        public Orden Orden { get; set; }
+        public List<Orden> Orden { get; set; }
     }
 }
