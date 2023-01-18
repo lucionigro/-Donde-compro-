@@ -19,7 +19,7 @@ namespace Donde_Compro.Models
         public int Roltype { get; set; }
 
         public UsuarioPago UsuarioPago { get; set; }
-        public int UsuarioPagoId { get; set; }
+        public int? UsuarioPagoId { get; set; }
 
         public Orden Orden { get; set; }
     }

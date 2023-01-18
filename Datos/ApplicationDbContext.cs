@@ -62,14 +62,14 @@ namespace Donde_Compro.Datos
                 .WithMany(c => c.Producto).HasForeignKey(c => c.CategoriaId);
 
             //Relacion uno a muchos (Orden y Producto)
-            modelBuilder.Entity<Producto>()
-                .HasOne(c => c.Orden)
-                .WithMany(c => c.Producto).HasForeignKey(c => c.OrdenId);
+            modelBuilder.Entity<Orden>()
+                .HasOne(c => c.Producto)
+                .WithMany(c => c.Orden).HasForeignKey(c => c.ProductoId);
 
             //Relacion uno a uno (Orden y Usuario)
             modelBuilder.Entity<Orden>()
                 .HasOne(c => c.Usuario)
-                .WithOne(c => c.Orden).HasForeignKey<Usuario>("UsuarioId");
+                .WithOne(c => c.Orden).HasForeignKey<Orden>("UsuarioId");
 
             base.OnModelCreating(modelBuilder);
         }
