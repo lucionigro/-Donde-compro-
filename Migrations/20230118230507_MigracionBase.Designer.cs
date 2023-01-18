@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Donde_Compro.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230118225527_MigracionInicial")]
-    partial class MigracionInicial
+    [Migration("20230118230507_MigracionBase")]
+    partial class MigracionBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

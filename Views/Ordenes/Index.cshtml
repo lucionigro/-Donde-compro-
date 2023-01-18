@@ -1,0 +1,54 @@
+﻿@model IEnumerable<Donde_Compro.Models.Orden>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Cantidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DiaDeCompra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Usuario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Producto)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cantidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DiaDeCompra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Usuario.Clave)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Producto.Descripcion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.OrdenId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.OrdenId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.OrdenId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
