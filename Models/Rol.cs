@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Donde_Compro.Models
 {
@@ -6,6 +7,7 @@ namespace Donde_Compro.Models
     {
         public int RolId { get; set; }
         [Range(1, 3)]
+        [DisplayName("Tipo de Rol")]
         public int RolType { get; set; }
         public List<Usuario> Usuario { get; set; }
     }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Donde_Compro.Models
 {
@@ -18,6 +19,7 @@ namespace Donde_Compro.Models
         public Rol Rol { get; set; }
         public int Roltype { get; set; }
 
+        [DisplayName("Tipo de pago")]
         public UsuarioPago UsuarioPago { get; set; }
         public int? UsuarioPagoId { get; set; }
 
