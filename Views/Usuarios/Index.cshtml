@@ -4,13 +4,16 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Estilos{
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
 
-<h1>Index</h1>
+<h1>Usuarios</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="tbUsuario" class="table">
     <thead>
         <tr>
             <th>
@@ -70,3 +73,12 @@
 }
     </tbody>
 </table>
+@section Scripts{
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#tbUsuario').DataTable();
+            });
+        </script>
+}
+

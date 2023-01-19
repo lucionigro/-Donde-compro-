@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace Donde_Compro.Models
 {
@@ -10,8 +11,10 @@ namespace Donde_Compro.Models
         [StringLength(350)]
         public string Descripcion { get; set; }
         public float Precio { get; set; }
+        [DisplayName("Fecha de Publicacion")]
         public DateTime Publicado { get; set; }
 
+        [DisplayName("Categoria del Producto")]
         public ProductoCategoria ProductoCategoria { get; set; }
         public int CategoriaId { get; set; }
 
