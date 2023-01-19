@@ -156,15 +156,14 @@ namespace Donde_Compro.Migrations
                     b.Property<int>("Roltype")
                         .HasColumnType("int");
 
-                    b.Property<int?>("UsuarioPagoId")
-                        .IsRequired()
+                    b.Property<int>("TipoDePago")
                         .HasColumnType("int");
 
                     b.HasKey("UsuarioId");
 
                     b.HasIndex("Roltype");
 
-                    b.HasIndex("UsuarioPagoId")
+                    b.HasIndex("TipoDePago")
                         .IsUnique();
 
                     b.ToTable("Usuario");
@@ -178,9 +177,8 @@ namespace Donde_Compro.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UsuarioPagoId"), 1L, 1);
 
-                    b.Property<string>("TipoDePago")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("TipoDePago")
+                        .HasColumnType("int");
 
                     b.HasKey("UsuarioPagoId");
 
@@ -227,7 +225,7 @@ namespace Donde_Compro.Migrations
 
                     b.HasOne("Donde_Compro.Models.UsuarioPago", "UsuarioPago")
                         .WithOne("Usuario")
-                        .HasForeignKey("Donde_Compro.Models.Usuario", "UsuarioPagoId")
+                        .HasForeignKey("Donde_Compro.Models.Usuario", "TipoDePago")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

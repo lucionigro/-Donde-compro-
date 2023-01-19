@@ -14,8 +14,9 @@ namespace Donde_Compro.Models
         [DisplayName("Fecha de Publicacion")]
         public DateTime Publicado { get; set; }
 
-        [DisplayName("Categoria del Producto")]
+        
         public ProductoCategoria ProductoCategoria { get; set; }
+        [DisplayName("Categoria del Producto")]
         public int CategoriaId { get; set; }
 
         public List<Orden> Orden { get; set; }

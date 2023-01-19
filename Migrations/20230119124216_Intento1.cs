@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Donde_Compro.Migrations
 {
-    public partial class MigracionBase : Migration
+    public partial class Intento1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -41,7 +41,7 @@ namespace Donde_Compro.Migrations
                 {
                     UsuarioPagoId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TipoDePago = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    TipoDePago = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -83,7 +83,7 @@ namespace Donde_Compro.Migrations
                     Direccion = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: false),
                     Nacimiento = table.Column<DateTime>(type: "date", nullable: false),
                     Roltype = table.Column<int>(type: "int", nullable: false),
-                    UsuarioPagoId = table.Column<int>(type: "int", nullable: false)
+                    TipoDePago = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,8 +95,8 @@ namespace Donde_Compro.Migrations
                         principalColumn: "RolId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Usuario_UsuarioPago_UsuarioPagoId",
-                        column: x => x.UsuarioPagoId,
+                        name: "FK_Usuario_UsuarioPago_TipoDePago",
+                        column: x => x.TipoDePago,
                         principalTable: "UsuarioPago",
                         principalColumn: "UsuarioPagoId",
                         onDelete: ReferentialAction.Cascade);
@@ -152,9 +152,9 @@ namespace Donde_Compro.Migrations
                 column: "Roltype");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuario_UsuarioPagoId",
+                name: "IX_Usuario_TipoDePago",
                 table: "Usuario",
-                column: "UsuarioPagoId",
+                column: "TipoDePago",
                 unique: true);
         }
 

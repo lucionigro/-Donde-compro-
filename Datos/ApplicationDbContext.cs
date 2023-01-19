@@ -54,7 +54,7 @@ namespace Donde_Compro.Datos
             //Relacion uno a uno (Usuario y UsuarioPago)
             modelBuilder.Entity<Usuario>()
                 .HasOne(c => c.UsuarioPago)
-                .WithOne(c => c.Usuario).HasForeignKey<Usuario>("UsuarioPagoId");
+                .WithOne(c => c.Usuario).HasForeignKey<Usuario>("TipoDePago");
 
             //Relacion uno a muchos (Categoria y Producto)
             modelBuilder.Entity<Producto>()

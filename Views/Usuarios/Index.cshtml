@@ -62,7 +62,7 @@
                 @Html.DisplayFor(modelItem => item.Rol.RolId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UsuarioPago.TipoDePago)
+                @Html.DisplayFor(modelItem => item.UsuarioPago.UsuarioPagoId)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.UsuarioId">Edit</a> |
@@ -81,4 +81,3 @@
             });
         </script>
 }
-

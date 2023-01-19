@@ -50,7 +50,7 @@ namespace Donde_Compro.Controllers
         public IActionResult Create()
         {
             ViewData["Roltype"] = new SelectList(_context.Rol, "RolId", "RolId");
-            ViewData["UsuarioPagoId"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "TipoDePago");
+            ViewData["TipoDePago"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "UsuarioPagoId");
             return View();
         }
 
@@ -59,7 +59,7 @@ namespace Donde_Compro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("UsuarioId,Nombre,Correo,Clave,Direccion,Nacimiento,Roltype,UsuarioPagoId")] Usuario usuario)
+        public async Task<IActionResult> Create([Bind("UsuarioId,Nombre,Correo,Clave,Direccion,Nacimiento,Roltype,TipoDePago")] Usuario usuario)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace Donde_Compro.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Roltype"] = new SelectList(_context.Rol, "RolId", "RolId", usuario.Roltype);
-            ViewData["UsuarioPagoId"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "TipoDePago", usuario.UsuarioPagoId);
+            ViewData["TipoDePago"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "UsuarioPagoId", usuario.TipoDePago);
             return View(usuario);
         }
 
@@ -86,7 +86,7 @@ namespace Donde_Compro.Controllers
                 return NotFound();
             }
             ViewData["Roltype"] = new SelectList(_context.Rol, "RolId", "RolId", usuario.Roltype);
-            ViewData["UsuarioPagoId"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "TipoDePago", usuario.UsuarioPagoId);
+            ViewData["TipoDePago"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "UsuarioPagoId", usuario.TipoDePago);
             return View(usuario);
         }
 
@@ -95,7 +95,7 @@ namespace Donde_Compro.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,Nombre,Correo,Clave,Direccion,Nacimiento,Roltype,UsuarioPagoId")] Usuario usuario)
+        public async Task<IActionResult> Edit(int id, [Bind("UsuarioId,Nombre,Correo,Clave,Direccion,Nacimiento,Roltype,TipoDePago")] Usuario usuario)
         {
             if (id != usuario.UsuarioId)
             {
@@ -123,7 +123,7 @@ namespace Donde_Compro.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Roltype"] = new SelectList(_context.Rol, "RolId", "RolId", usuario.Roltype);
-            ViewData["UsuarioPagoId"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "TipoDePago", usuario.UsuarioPagoId);
+            ViewData["TipoDePago"] = new SelectList(_context.UsuarioPago, "UsuarioPagoId", "UsuarioPagoId", usuario.TipoDePago);
             return View(usuario);
         }
 

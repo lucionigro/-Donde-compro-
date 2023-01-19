@@ -11,9 +11,10 @@ namespace Donde_Compro.Models
         public DateTime DiaDeCompra { get; set; }
 
         public Usuario Usuario { get; set; }
+        [DisplayName("Usuario ID")]
         public int? UsuarioId { get; set; }
-       
 
+        [DisplayName("Producto ID")]
         public int? ProductoId { get; set; }
         public Producto Producto { get; set; }
     }

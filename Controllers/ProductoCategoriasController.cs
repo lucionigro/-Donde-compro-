@@ -58,10 +58,12 @@ namespace Donde_Compro.Controllers
         {
             if (ModelState.IsValid)
             {
+                Console.WriteLine("te salio :D");
                 _context.Add(productoCategoria);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            Console.WriteLine("no te salio");
             return View(productoCategoria);
         }
 
